@@ -37,9 +37,9 @@
   2. Celery workers successfully pull tasks from Redis and execute the Phase 1 pipeline.
   3. Client can poll a status endpoint to retrieve the final generated image URL.
 **Plans**: 3 plans
-- [ ] 02-01-PLAN.md — Celery & Redis Integration
-- [ ] 02-02-PLAN.md — Async API Gateway Refactor
-- [ ] 02-03-PLAN.md — E2E Async Pipeline Verification
+- [x] 02-01-PLAN.md — Celery & Redis Integration
+- [x] 02-02-PLAN.md — Async API Gateway Refactor
+- [x] 02-03-PLAN.md — E2E Async Pipeline Verification
 
 ### Phase 3: User Experience & Photo Management
 **Goal**: Allow users to interact with the try-on system through a web interface.
@@ -90,7 +90,7 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Core VTO Engine | 3/3 | Completed | 2026-03-24 |
-| 2. Async Infrastructure | 0/3 | Not started | - |
+| 2. Async Infrastructure | 3/3 | Completed | 2026-03-24 |
 | 3. User Experience | 0/1 | Not started | - |
 | 4. Product Catalog | 0/1 | Not started | - |
 | 5. Smart Styling | 0/1 | Not started | - |

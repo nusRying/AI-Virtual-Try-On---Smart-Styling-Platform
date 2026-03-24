@@ -5,13 +5,13 @@
 **Current Focus:** Developing the core VTO inference pipeline.
 
 ## Current Position
-**Phase:** 2. Async Infrastructure & API Gateway
-**Plan:** 02-01 (Celery & Redis Integration)
-**Status:** Executing
-**Progress:** [|||-----------------] 16%
+**Phase:** 3. User Experience & Photo Management
+**Plan:** TBD
+**Status:** Transitioning
+**Progress:** [||||||--------------] 33%
 
 ## Performance Metrics
-- **Phase Completion:** 1/6
+- **Phase Completion:** 2/6
 - **Requirement Coverage:** 100%
 - **Inference Latency Target:** < 10s (TBD)
 - **Segmentation Accuracy:** Verified (MediaPipe + SAM 2)
@@ -21,11 +21,13 @@
 ### Decisions
 - Diffusion-based VTO (IDM-VTON) chosen over GANs for realism.
 - FastAPI + Celery chosen for task orchestration.
-- Weaviate used for multimodal styling retrieval.
+- Redis used as the message broker for Celery.
 - Utilized existing `revival` conda environment to preserve training state.
+- Downgraded NumPy to 1.26.4 for MediaPipe/TensorFlow compatibility.
 
 ### Technical Debt
-- IDM-VTON engine currently uses mock blending; needs full diffusers implementation in Phase 2/3.
+- IDM-VTON engine currently uses mock blending; needs full diffusers implementation in Phase 3.
+- Need to implement a proper result cleanup strategy for the `temp/` directories.
 
 ### Blockers
 - None
@@ -33,16 +35,17 @@
 ## Session Continuity
 
 ### Last Actions
-- Completed Phase 1: Core VTO Engine.
-- Completed Phase 2 Planning (3 plans created).
-- Reclaimed 75GB of system storage.
+- Completed Phase 2: Async Infrastructure & API Gateway.
+- Refactored API to support asynchronous task submission and status polling.
+- Updated E2E test script for async verification.
 
 ### Immediate Next Steps
-1. Execute `/gsd:execute-phase 02` to start with Plan 02-01 (Celery & Redis).
-2. Download model weights to `models/cache/`.
+1. Run `/gsd:plan-phase 3` to design the Frontend (React/Vite).
+2. Start the FastAPI server and Celery worker for E2E testing.
 
 ### To-Do List
 - [x] Initialize repository structure.
-- [x] Plan Phase 1.
+- [x] Plan Phase 1 & 2.
 - [x] Implement VTO inference script.
-- [ ] Setup Celery/Redis for async tasks.
+- [x] Setup Celery/Redis for async tasks.
+- [ ] Implement React Frontend.

@@ -12,3 +12,5 @@ python-multipart
 pydantic
 python-dotenv
 numpy
+celery
+redis
