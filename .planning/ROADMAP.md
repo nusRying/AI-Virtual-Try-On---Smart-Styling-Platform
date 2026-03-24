@@ -6,8 +6,8 @@
 
 ## Phases
 
-- [ ] **Phase 1: Core VTO Engine** - Implement the diffusion-based inference pipeline for realistic garment overlay.
-- [ ] **Phase 2: Async Infrastructure & API Gateway** - Build the scalable backend to handle long-running AI tasks.
+- [x] **Phase 1: Core VTO Engine** - Implement the diffusion-based inference pipeline for realistic garment overlay.
+- [x] **Phase 2: Async Infrastructure & API Gateway** - Build the scalable backend to handle long-running AI tasks.
 - [ ] **Phase 3: User Experience & Photo Management** - Create the frontend for users to upload photos and view try-on results.
 - [ ] **Phase 4: Product Catalog & Search** - Implement the searchable selection of garments for try-on.
 - [ ] **Phase 5: Smart Styling Recommendations** - Integrate the RAG-based engine for "Complete the Look" advice.
@@ -47,9 +47,11 @@
 **Requirements**: VTO-02
 **Success Criteria** (what must be TRUE):
   1. User can upload a portrait photo through a web form with real-time validation (size/aspect ratio).
-  2. User can view the processed try-on result in the browser once generation is complete.
-  3. User can toggle between different uploaded garments to see them on their photo.
-**Plans**: TBD
+  2. User can view the processed try-on result in the browser once generation is complete (via polling).
+  3. User can select from a few sample garments to trigger the try-on.
+**Plans**: 2 plans
+- [ ] 03-01-PLAN.md — Frontend Setup & Upload Component
+- [ ] 03-02-PLAN.md — Garment Selection & API Integration
 **UI hint**: yes
 
 ### Phase 4: Product Catalog & Search
@@ -91,7 +93,7 @@
 |-------|----------------|--------|-----------|
 | 1. Core VTO Engine | 3/3 | Completed | 2026-03-24 |
 | 2. Async Infrastructure | 3/3 | Completed | 2026-03-24 |
-| 3. User Experience | 0/1 | Not started | - |
+| 3. User Experience | 0/2 | In Progress | - |
 | 4. Product Catalog | 0/1 | Not started | - |
 | 5. Smart Styling | 0/1 | Not started | - |
 | 6. Merchant Dashboard | 0/1 | Not started | - |
