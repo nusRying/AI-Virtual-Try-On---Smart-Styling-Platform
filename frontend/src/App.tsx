@@ -3,11 +3,13 @@ import axios from 'axios'
 import UserPhotoUpload from './components/UserPhotoUpload'
 import ProductCatalog, { Garment } from './components/ProductCatalog'
 import StylingRecommendations from './components/StylingRecommendations'
+import MerchantDashboard from './components/MerchantDashboard'
 import './App.css'
 
 const API_BASE_URL = 'http://localhost:8000/api/v1'
 
 function App() {
+  const [viewMode, setViewMode] = useState<'user' | 'merchant'>('user')
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null)
   const [selectedGarment, setSelectedGarment] = useState<Garment | null>(null)
   const [taskId, setTaskId] = useState<string | null>(null)
@@ -109,64 +111,84 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
+        <div className="header-top">
+          <div className="mode-toggle">
+            <button 
+              className={viewMode === 'user' ? 'active' : ''} 
+              onClick={() => setViewMode('user')}
+            >
+              User View
+            </button>
+            <button 
+              className={viewMode === 'merchant' ? 'active' : ''} 
+              onClick={() => setViewMode('merchant')}
+            >
+              Merchant Dashboard
+            </button>
+          </div>
+        </div>
         <h1>AI Virtual Try-On</h1>
         <p>Smart Styling Platform</p>
       </header>
 
       <main className="app-main">
-        <div className="workspace">
-          <section className="setup-panel">
-            <UserPhotoUpload onPhotoSelect={handlePhotoSelect} />
-            
-            <ProductCatalog 
-              onGarmentSelect={handleGarmentSelect} 
-              selectedGarmentId={selectedGarment?.id || null} 
-            />
-
-            {status === 'error' && (
-              <div className="error-box">
-                <p>Error: {errorMessage}</p>
-                <button onClick={handleTryOnManual} className="retry-btn">Retry Try-On</button>
-              </div>
-            )}
-
-            {selectedGarment && (
-              <StylingRecommendations 
-                recommendations={recommendations} 
-                stylingTip={stylingTip} 
-              />
-            )}
-          </section>
-
-          <section className="result-panel">
-            <h3>3. Try-On Result</h3>
-            <div className="result-display">
-              {status === 'processing' && (
-                <div className="loader-container">
-                  <div className="loader"></div>
-                  <p>Our AI is dressing you up...</p>
-                </div>
-              )}
+        {viewMode === 'merchant' ? (
+          <MerchantDashboard />
+        ) : (
+          <div className="workspace">
+            <section className="setup-panel">
+              <UserPhotoUpload onPhotoSelect={handlePhotoSelect} />
               
-              {status === 'success' && resultImage && (
-                <div className="result-image-container">
-                  <img src={resultImage} alt="Try-On Result" className="final-result" />
-                  <a href={resultImage} download="tryon_result.png" className="download-link">Download Result</a>
+              <ProductCatalog 
+                onGarmentSelect={handleGarmentSelect} 
+                selectedGarmentId={selectedGarment?.id || null} 
+              />
+
+              {status === 'error' && (
+                <div className="error-box">
+                  <p>Error: {errorMessage}</p>
+                  <button onClick={handleTryOnManual} className="retry-btn">Retry Try-On</button>
                 </div>
               )}
 
-              {status === 'idle' && !resultImage && (
-                <div className="result-placeholder">
-                  {selectedPhoto ? (
-                    <p>Select a garment to see the magic!</p>
-                  ) : (
-                    <p>Please upload a portrait photo first.</p>
-                  )}
-                </div>
+              {selectedGarment && (
+                <StylingRecommendations 
+                  recommendations={recommendations} 
+                  stylingTip={stylingTip} 
+                />
               )}
-            </div>
-          </section>
-        </div>
+            </section>
+
+            <section className="result-panel">
+              <h3>3. Try-On Result</h3>
+              <div className="result-display">
+                {status === 'processing' && (
+                  <div className="loader-container">
+                    <div className="loader"></div>
+                    <p>Our AI is dressing you up...</p>
+                  </div>
+                )}
+                
+                {status === 'success' && resultImage && (
+                  <div className="result-image-container">
+                    <img src={resultImage} alt="Try-On Result" className="final-result" />
+                    <a href={resultImage} download="tryon_result.png" className="download-link">Download Result</a>
+                  </div>
+                )}
+
+                {status === 'idle' && !resultImage && (
+                  <div className="result-placeholder">
+                    {selectedPhoto ? (
+                      <p>Select a garment to see the magic!</p>
+                    ) : (
+                      <p>Please upload a portrait photo first.</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            </section>
+          </div>
+        )}
       </main>
 
       <footer className="app-footer">

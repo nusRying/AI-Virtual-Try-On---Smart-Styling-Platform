@@ -78,6 +78,86 @@ async def get_catalog(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/api/v1/catalog")
+async def add_to_catalog(
+    name: str = Form(...),
+    price: float = Form(...),
+    category: str = Form("Shirts"),
+    description: str = Form(""),
+    tags: str = Form(""),
+    image: UploadFile = File(...)
+):
+    """
+    Allows merchants to add new garments to the catalog.
+    """
+    try:
+        garment_id = f"custom-{str(uuid.uuid4())[:8]}"
+        filename = f"{garment_id}-full.jpg"
+        file_path = os.path.join("backend/static/garments", filename)
+        
+        # 1. Save the image
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(image.file, buffer)
+            
+        # 2. Update JSON
+        new_garment = {
+            "id": garment_id,
+            "name": name,
+            "category": category,
+            "price": price,
+            "description": description,
+            "thumbnail_url": f"/static/garments/{filename}", # Using same for thumb in proto
+            "full_image_url": f"/static/garments/{filename}",
+            "tags": [t.strip() for t in tags.split(",")],
+            "try_on_count": 0
+        }
+        
+        with open(GARMENTS_DATA_FILE, "r") as f:
+            catalog = json.load(f)
+        catalog.append(new_garment)
+        with open(GARMENTS_DATA_FILE, "w") as f:
+            json.dump(catalog, f, indent=2)
+            
+        return {"status": "success", "garment": new_garment}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.delete("/api/v1/catalog/{garment_id}")
+async def delete_from_catalog(garment_id: str):
+    """
+    Removes a garment from the catalog.
+    """
+    try:
+        with open(GARMENTS_DATA_FILE, "r") as f:
+            catalog = json.load(f)
+        
+        new_catalog = [g for g in catalog if g["id"] != garment_id]
+        
+        if len(new_catalog) == len(catalog):
+            raise HTTPException(status_code=404, detail="Garment not found.")
+            
+        with open(GARMENTS_DATA_FILE, "w") as f:
+            json.dump(new_catalog, f, indent=2)
+            
+        return {"status": "success", "message": f"Garment {garment_id} deleted."}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+def increment_try_on_count(garment_id: str):
+    try:
+        with open(GARMENTS_DATA_FILE, "r") as f:
+            catalog = json.load(f)
+        for garment in catalog:
+            if garment["id"] == garment_id:
+                garment["try_on_count"] = garment.get("try_on_count", 0) + 1
+                break
+        with open(GARMENTS_DATA_FILE, "w") as f:
+            json.dump(catalog, f, indent=2)
+    except Exception as e:
+        print(f"Error updating metrics: {e}")
+
 @app.post("/api/v1/try-on")
 async def try_on_async(
     user_image: UploadFile = File(...),
@@ -101,6 +181,7 @@ async def try_on_async(
 
         # 3. Resolve garment image
         if garment_id:
+            increment_try_on_count(garment_id)
             # Look up garment in JSON
             with open(GARMENTS_DATA_FILE, "r") as f:
                 catalog = json.load(f)

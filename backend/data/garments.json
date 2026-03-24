@@ -7,7 +7,8 @@
     "description": "A timeless classic white shirt made from premium cotton.",
     "thumbnail_url": "/static/garments/shirt-1-thumb.jpg",
     "full_image_url": "/static/garments/shirt-1-full.jpg",
-    "tags": ["white", "formal", "cotton", "oxford"]
+    "tags": ["white", "formal", "cotton", "oxford"],
+    "try_on_count": 0
   },
   {
     "id": "shirt-2",
@@ -17,7 +18,8 @@
     "description": "Rugged and durable denim shirt in a versatile blue wash.",
     "thumbnail_url": "/static/garments/shirt-2-thumb.jpg",
     "full_image_url": "/static/garments/shirt-2-full.jpg",
-    "tags": ["blue", "denim", "casual", "rugged"]
+    "tags": ["blue", "denim", "casual", "rugged"],
+    "try_on_count": 0
   },
   {
     "id": "shirt-3",
@@ -27,7 +29,8 @@
     "description": "Breathable black polo shirt with a slim fit.",
     "thumbnail_url": "/static/garments/shirt-3-thumb.jpg",
     "full_image_url": "/static/garments/shirt-3-full.jpg",
-    "tags": ["black", "polo", "slim", "sporty"]
+    "tags": ["black", "polo", "slim", "sporty"],
+    "try_on_count": 0
   },
   {
     "id": "shirt-4",
@@ -37,7 +40,8 @@
     "description": "Lightweight striped linen shirt, perfect for warm weather.",
     "thumbnail_url": "/static/garments/shirt-4-thumb.jpg",
     "full_image_url": "/static/garments/shirt-4-full.jpg",
-    "tags": ["striped", "linen", "summer", "breathable"]
+    "tags": ["striped", "linen", "summer", "breathable"],
+    "try_on_count": 0
   },
   {
     "id": "shirt-5",
@@ -47,7 +51,8 @@
     "description": "Soft navy flannel shirt with a classic plaid pattern.",
     "thumbnail_url": "/static/garments/shirt-5-thumb.jpg",
     "full_image_url": "/static/garments/shirt-5-full.jpg",
-    "tags": ["navy", "flannel", "plaid", "winter"]
+    "tags": ["navy", "flannel", "plaid", "winter"],
+    "try_on_count": 0
   },
   {
     "id": "shirt-6",
@@ -57,7 +62,8 @@
     "description": "Functional olive green shirt with dual chest pockets.",
     "thumbnail_url": "/static/garments/shirt-6-thumb.jpg",
     "full_image_url": "/static/garments/shirt-6-full.jpg",
-    "tags": ["olive", "green", "cargo", "utility"]
+    "tags": ["olive", "green", "cargo", "utility"],
+    "try_on_count": 0
   },
   {
     "id": "shirt-7",
@@ -67,7 +73,8 @@
     "description": "Elegant burgundy dress shirt for formal occasions.",
     "thumbnail_url": "/static/garments/shirt-7-thumb.jpg",
     "full_image_url": "/static/garments/shirt-7-full.jpg",
-    "tags": ["burgundy", "dress", "formal", "silk-blend"]
+    "tags": ["burgundy", "dress", "formal", "silk-blend"],
+    "try_on_count": 0
   },
   {
     "id": "shirt-8",
@@ -77,7 +84,8 @@
     "description": "Comfortable grey t-shirt with a minimalist graphic design.",
     "thumbnail_url": "/static/garments/shirt-8-thumb.jpg",
     "full_image_url": "/static/garments/shirt-8-full.jpg",
-    "tags": ["grey", "t-shirt", "graphic", "casual"]
+    "tags": ["grey", "t-shirt", "graphic", "casual"],
+    "try_on_count": 0
   },
   {
     "id": "shirt-9",
@@ -87,7 +95,8 @@
     "description": "Vibrant yellow shirt with a stylish floral pattern.",
     "thumbnail_url": "/static/garments/shirt-9-thumb.jpg",
     "full_image_url": "/static/garments/shirt-9-full.jpg",
-    "tags": ["yellow", "floral", "print", "tropical"]
+    "tags": ["yellow", "floral", "print", "tropical"],
+    "try_on_count": 0
   },
   {
     "id": "shirt-10",
@@ -97,6 +106,7 @@
     "description": "Heavyweight khaki overshirt for layering.",
     "thumbnail_url": "/static/garments/shirt-10-thumb.jpg",
     "full_image_url": "/static/garments/shirt-10-full.jpg",
-    "tags": ["khaki", "utility", "overshirt", "layering"]
+    "tags": ["khaki", "utility", "overshirt", "layering"],
+    "try_on_count": 0
   }
 ]

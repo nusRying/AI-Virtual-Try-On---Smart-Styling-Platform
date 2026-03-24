@@ -88,7 +88,9 @@
   1. Merchant can log in and view a list of their uploaded garments.
   2. Merchant can upload a new garment image and define its metadata (price, category).
   3. Dashboard displays a metric for "Total Try-Ons" per garment.
-**Plans**: TBD
+**Plans**: 2 plans
+- [x] 06-01-PLAN.md — Merchant API & Metrics
+- [x] 06-02-PLAN.md — Merchant Dashboard UI
 **UI hint**: yes
 
 ## Progress Table
@@ -100,4 +102,4 @@
 | 3. User Experience | 2/2 | Completed | 2026-03-24 |
 | 4. Product Catalog | 2/2 | Completed | 2026-03-25 |
 | 5. Smart Styling | 2/2 | Completed | 2026-03-25 |
-| 6. Merchant Dashboard | 0/1 | Not started | - |
+| 6. Merchant Dashboard | 2/2 | Completed | 2026-03-25 |
