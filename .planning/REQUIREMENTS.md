@@ -39,12 +39,12 @@ These features are valuable but deferred to ensure a focused v1 launch.
 
 | REQ-ID | Phase | Success Criteria | Status |
 |--------|-------|------------------|--------|
-| VTO-01 | | | Pending |
-| VTO-02 | | | Pending |
-| STYL-01 | | | Pending |
-| STYL-02 | | | Pending |
-| PLAT-01 | | | Pending |
-| PLAT-02 | | | Pending |
+| VTO-01 | Phase 1 | System can take a user image and a garment image as input and output a merged try-on image. | Pending |
+| VTO-02 | Phase 3 | User can upload a portrait photo through a web form with real-time validation. | Pending |
+| STYL-01 | Phase 4 | User can browse a paginated gallery and search items by keywords. | Pending |
+| STYL-02 | Phase 5 | User sees "Complete the Look" suggestions generated via semantic retrieval from Weaviate. | Pending |
+| PLAT-01 | Phase 2 | API returns a task ID immediately and workers process the pipeline asynchronously. | Pending |
+| PLAT-02 | Phase 6 | Merchant can log in, upload new garments, and view "Total Try-Ons" metric. | Pending |
 
 ---
 *Last updated: 2026-03-24*
