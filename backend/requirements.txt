@@ -1,0 +1,14 @@
+torch
+torchvision
+torchaudio
+mediapipe
+segment-anything-2
+opencv-python
+pillow
+huggingface_hub
+fastapi
+uvicorn
+python-multipart
+pydantic
+python-dotenv
+numpy
