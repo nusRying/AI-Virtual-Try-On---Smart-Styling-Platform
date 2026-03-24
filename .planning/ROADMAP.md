@@ -75,7 +75,9 @@
   1. User sees "Complete the Look" suggestions for matching items (pants/shoes) when a shirt is selected.
   2. Recommendations are generated via semantic retrieval from Weaviate based on the selected item.
   3. Suggestions include a brief AI-generated reasoning for the match (powered by Claude).
-**Plans**: TBD
+**Plans**: 2 plans
+- [x] 05-01-PLAN.md — Recommendation API & LLM Reasoner
+- [x] 05-02-PLAN.md — Styling Recommendations UI
 **UI hint**: yes
 
 ### Phase 6: Merchant Dashboard
@@ -97,5 +99,5 @@
 | 2. Async Infrastructure | 3/3 | Completed | 2026-03-24 |
 | 3. User Experience | 2/2 | Completed | 2026-03-24 |
 | 4. Product Catalog | 2/2 | Completed | 2026-03-25 |
-| 5. Smart Styling | 0/1 | Not started | - |
+| 5. Smart Styling | 2/2 | Completed | 2026-03-25 |
 | 6. Merchant Dashboard | 0/1 | Not started | - |

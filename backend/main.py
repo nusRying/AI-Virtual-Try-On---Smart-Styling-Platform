@@ -7,10 +7,16 @@ import os
 import uuid
 import shutil
 import json
-from typing import Optional
+from typing import Optional, List
 from backend.tasks import vto_task
+from backend.core.recommendations import RecommendationEngine
+from backend.core.reasoner import StylingReasoner
 
 app = FastAPI(title="AI Virtual Try-On API (Async)")
+
+# Initialize Engines
+rec_engine = RecommendationEngine()
+styling_reasoner = StylingReasoner()
 
 # Configure CORS
 app.add_middleware(
@@ -155,6 +161,30 @@ async def get_task_status(task_id: str):
         response["error"] = str(task_result.info)
         
     return JSONResponse(response)
+
+@app.get("/api/v1/recommendations/{garment_id}")
+async def get_recommendations(garment_id: str):
+    """
+    Returns 'Complete the Look' recommendations for a given garment.
+    """
+    try:
+        # 1. Fetch matching items
+        matched_items = rec_engine.get_recommendations(garment_id)
+        
+        # 2. Fetch the original item details for the reasoner
+        with open(GARMENTS_DATA_FILE, "r") as f:
+            catalog = json.load(f)
+        selected_item = next((g for g in catalog if g["id"] == garment_id), {})
+        
+        # 3. Generate styling tip
+        styling_tip = styling_reasoner.generate_styling_tip(selected_item, matched_items)
+        
+        return {
+            "recommendations": matched_items,
+            "styling_tip": styling_tip
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/v1/results/{filename}")
 async def get_vto_result(filename: str):

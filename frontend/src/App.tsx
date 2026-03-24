@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import UserPhotoUpload from './components/UserPhotoUpload'
 import ProductCatalog, { Garment } from './components/ProductCatalog'
+import StylingRecommendations from './components/StylingRecommendations'
 import './App.css'
 
 const API_BASE_URL = 'http://localhost:8000/api/v1'
@@ -13,6 +14,10 @@ function App() {
   const [status, setStatus] = useState<'idle' | 'processing' | 'success' | 'error'>('idle')
   const [resultImage, setResultImage] = useState<string | null>(null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  
+  // Recommendations state
+  const [recommendations, setRecommendations] = useState<any[]>([])
+  const [stylingTip, setStylingTip] = useState<string>('')
 
   const handlePhotoSelect = (file: File) => {
     setSelectedPhoto(file)
@@ -22,10 +27,21 @@ function App() {
 
   const handleGarmentSelect = (garment: Garment) => {
     setSelectedGarment(garment)
+    fetchRecommendations(garment.id)
     
     // Auto-trigger try-on if photo is already uploaded
     if (selectedPhoto && status !== 'processing') {
       triggerTryOn(selectedPhoto, garment.id)
+    }
+  }
+
+  const fetchRecommendations = async (garmentId: string) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/recommendations/${garmentId}`)
+      setRecommendations(response.data.recommendations)
+      setStylingTip(response.data.styling_tip)
+    } catch (err) {
+      console.error('Error fetching recommendations:', err)
     }
   }
 
@@ -112,6 +128,13 @@ function App() {
                 <p>Error: {errorMessage}</p>
                 <button onClick={handleTryOnManual} className="retry-btn">Retry Try-On</button>
               </div>
+            )}
+
+            {selectedGarment && (
+              <StylingRecommendations 
+                recommendations={recommendations} 
+                stylingTip={stylingTip} 
+              />
             )}
           </section>
 
