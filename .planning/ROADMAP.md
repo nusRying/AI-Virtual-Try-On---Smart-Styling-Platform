@@ -23,7 +23,10 @@
   1. System can take a user image and a garment image as input and output a merged try-on image.
   2. Garment textures and logos are preserved in the output using IDM-VTON.
   3. Body segmentation (SAM 2) prevents garment bleeding into the background.
-**Plans**: TBD
+**Plans**: 3 plans
+- [ ] 01-01-PLAN.md — Setup environment and Preprocessor (Pose + SAM 2)
+- [ ] 01-02-PLAN.md — Implement IDM-VTON Inference Engine & Weights
+- [ ] 01-03-PLAN.md — Expose as FastAPI API & E2E Verification
 
 ### Phase 2: Async Infrastructure & API Gateway
 **Goal**: Enable reliable, non-blocking execution of GPU-intensive tasks.
@@ -83,7 +86,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Core VTO Engine | 0/1 | Not started | - |
+| 1. Core VTO Engine | 0/3 | Planning Complete | - |
 | 2. Async Infrastructure | 0/1 | Not started | - |
 | 3. User Experience | 0/1 | Not started | - |
 | 4. Product Catalog | 0/1 | Not started | - |
