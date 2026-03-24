@@ -1,0 +1,144 @@
+.catalog-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.catalog-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.8rem 1.2rem;
+  border: 2px solid #eee;
+  border-radius: 25px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+}
+
+.garment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.garment-card {
+  border: 2px solid #eee;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.garment-card:hover {
+  transform: translateY(-5px);
+  border-color: #007bff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.garment-card.selected {
+  border-color: #007bff;
+  background-color: #f0f7ff;
+}
+
+.image-wrapper {
+  aspect-ratio: 3/4;
+  width: 100%;
+  background-color: #f8f9fa;
+  overflow: hidden;
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.garment-info {
+  padding: 1rem;
+  text-align: left;
+}
+
+.garment-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.3rem 0;
+  color: #213547;
+}
+
+.garment-price {
+  font-size: 0.9rem;
+  color: #007bff;
+  font-weight: 700;
+  margin: 0;
+}
+
+.catalog-loader {
+  padding: 3rem;
+  color: #666;
+  font-style: italic;
+}
+
+.no-results {
+  padding: 2rem;
+  color: #999;
+}
+
+.pagination {
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1.2rem;
+  border: 1px solid #007bff;
+  background-color: transparent;
+  color: #007bff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination button:disabled {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+@media (max-width: 600px) {
+  .garment-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

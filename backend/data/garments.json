@@ -1,0 +1,102 @@
+[
+  {
+    "id": "shirt-1",
+    "name": "Classic White Oxford",
+    "category": "Shirts",
+    "price": 45.00,
+    "description": "A timeless classic white shirt made from premium cotton.",
+    "thumbnail_url": "/static/garments/shirt-1-thumb.jpg",
+    "full_image_url": "/static/garments/shirt-1-full.jpg",
+    "tags": ["white", "formal", "cotton", "oxford"]
+  },
+  {
+    "id": "shirt-2",
+    "name": "Blue Denim Shirt",
+    "category": "Shirts",
+    "price": 55.00,
+    "description": "Rugged and durable denim shirt in a versatile blue wash.",
+    "thumbnail_url": "/static/garments/shirt-2-thumb.jpg",
+    "full_image_url": "/static/garments/shirt-2-full.jpg",
+    "tags": ["blue", "denim", "casual", "rugged"]
+  },
+  {
+    "id": "shirt-3",
+    "name": "Black Slim Polo",
+    "category": "Shirts",
+    "price": 35.00,
+    "description": "Breathable black polo shirt with a slim fit.",
+    "thumbnail_url": "/static/garments/shirt-3-thumb.jpg",
+    "full_image_url": "/static/garments/shirt-3-full.jpg",
+    "tags": ["black", "polo", "slim", "sporty"]
+  },
+  {
+    "id": "shirt-4",
+    "name": "Striped Summer Linen",
+    "category": "Shirts",
+    "price": 60.00,
+    "description": "Lightweight striped linen shirt, perfect for warm weather.",
+    "thumbnail_url": "/static/garments/shirt-4-thumb.jpg",
+    "full_image_url": "/static/garments/shirt-4-full.jpg",
+    "tags": ["striped", "linen", "summer", "breathable"]
+  },
+  {
+    "id": "shirt-5",
+    "name": "Navy Flannel Plaid",
+    "category": "Shirts",
+    "price": 50.00,
+    "description": "Soft navy flannel shirt with a classic plaid pattern.",
+    "thumbnail_url": "/static/garments/shirt-5-thumb.jpg",
+    "full_image_url": "/static/garments/shirt-5-full.jpg",
+    "tags": ["navy", "flannel", "plaid", "winter"]
+  },
+  {
+    "id": "shirt-6",
+    "name": "Olive Green Cargo Shirt",
+    "category": "Shirts",
+    "price": 48.00,
+    "description": "Functional olive green shirt with dual chest pockets.",
+    "thumbnail_url": "/static/garments/shirt-6-thumb.jpg",
+    "full_image_url": "/static/garments/shirt-6-full.jpg",
+    "tags": ["olive", "green", "cargo", "utility"]
+  },
+  {
+    "id": "shirt-7",
+    "name": "Burgundy Dress Shirt",
+    "category": "Shirts",
+    "price": 52.00,
+    "description": "Elegant burgundy dress shirt for formal occasions.",
+    "thumbnail_url": "/static/garments/shirt-7-thumb.jpg",
+    "full_image_url": "/static/garments/shirt-7-full.jpg",
+    "tags": ["burgundy", "dress", "formal", "silk-blend"]
+  },
+  {
+    "id": "shirt-8",
+    "name": "Grey Graphic Tee",
+    "category": "Shirts",
+    "price": 25.00,
+    "description": "Comfortable grey t-shirt with a minimalist graphic design.",
+    "thumbnail_url": "/static/garments/shirt-8-thumb.jpg",
+    "full_image_url": "/static/garments/shirt-8-full.jpg",
+    "tags": ["grey", "t-shirt", "graphic", "casual"]
+  },
+  {
+    "id": "shirt-9",
+    "name": "Yellow Floral Print",
+    "category": "Shirts",
+    "price": 58.00,
+    "description": "Vibrant yellow shirt with a stylish floral pattern.",
+    "thumbnail_url": "/static/garments/shirt-9-thumb.jpg",
+    "full_image_url": "/static/garments/shirt-9-full.jpg",
+    "tags": ["yellow", "floral", "print", "tropical"]
+  },
+  {
+    "id": "shirt-10",
+    "name": "Khaki Utility Overshirt",
+    "category": "Shirts",
+    "price": 65.00,
+    "description": "Heavyweight khaki overshirt for layering.",
+    "thumbnail_url": "/static/garments/shirt-10-thumb.jpg",
+    "full_image_url": "/static/garments/shirt-10-full.jpg",
+    "tags": ["khaki", "utility", "overshirt", "layering"]
+  }
+]

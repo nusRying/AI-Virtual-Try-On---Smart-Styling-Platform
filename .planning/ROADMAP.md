@@ -63,8 +63,8 @@
   2. User can search for specific items using text keywords.
   3. Selecting an item from the catalog automatically triggers the try-on workflow.
 **Plans**: 2 plans
-- [ ] 04-01-PLAN.md — Backend Catalog & Search Implementation
-- [ ] 04-02-PLAN.md — Frontend Product Catalog & Try-On Integration
+- [x] 04-01-PLAN.md — Backend Catalog & Search Implementation
+- [x] 04-02-PLAN.md — Frontend Product Catalog & Try-On Integration
 **UI hint**: yes
 
 ### Phase 5: Smart Styling Recommendations
@@ -96,6 +96,6 @@
 | 1. Core VTO Engine | 3/3 | Completed | 2026-03-24 |
 | 2. Async Infrastructure | 3/3 | Completed | 2026-03-24 |
 | 3. User Experience | 2/2 | Completed | 2026-03-24 |
-| 4. Product Catalog | 0/2 | Not started | - |
+| 4. Product Catalog | 2/2 | Completed | 2026-03-25 |
 | 5. Smart Styling | 0/1 | Not started | - |
 | 6. Merchant Dashboard | 0/1 | Not started | - |
