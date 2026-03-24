@@ -1,0 +1,170 @@
+By the end, you should have:
+
+Upload user photo ✅
+Select a shirt ✅
+See themselves wearing it (even if imperfect) ✅
+Get 2–3 outfit suggestions ✅
+
+👉 That’s it. Not scalable. Not perfect. Just convincing.
+
+🧱 PoC Architecture (Simple Version)
+Frontend (React / simple UI)
+        ↓
+Backend (FastAPI)
+        ↓
+AI Scripts (Local / GPU / Colab)
+        ↓
+Storage (Local / simple cloud)
+
+👉 No microservices
+👉 No Kubernetes
+👉 No billing
+
+🗓️ 14-Day Execution Plan
+🚀 Phase 1: Setup (Day 1–2)
+✅ Tasks:
+Setup Python environment
+Install:
+PyTorch
+OpenCV
+FastAPI
+Setup simple React frontend (or even plain HTML)
+🎯 Output:
+Basic UI:
+Upload image
+Select product
+🧠 Phase 2: Virtual Try-On (Core) (Day 3–7)
+🔥 This is the hardest part
+Option A (Recommended):
+
+Use existing models:
+
+VITON / CP-VTON / TryOnDiffusion (GitHub)
+
+👉 Don’t build from scratch.
+
+✅ Tasks:
+Download pretrained model
+Run locally or on:
+Google Colab (fastest option)
+Input:
+Person image
+Clothing image
+Output:
+Generated try-on image
+⚠️ Reality Check:
+It won’t be perfect
+That’s OK for PoC
+🎯 Output:
+
+Working script:
+
+python tryon.py --person img.jpg --cloth shirt.png
+🔗 Phase 3: Backend Integration (Day 8–9)
+✅ Build FastAPI server
+
+Endpoints:
+
+POST /upload-image
+POST /try-on
+GET /result/{id}
+Flow:
+Upload image
+Call try-on script
+Return generated image
+🎯 Output:
+API working locally
+🎨 Phase 4: Frontend UI (Day 10–11)
+Keep it SIMPLE:
+Upload image
+Show 3 shirts
+Click → see try-on result
+Tech:
+React OR
+Even plain HTML + JS (faster)
+🎯 Output:
+Basic working UI
+👔 Phase 5: Styling Recommendation (Day 12–13)
+⚠️ Don’t overcomplicate ML here
+
+Start with:
+👉 Rule-based system
+
+Example Logic:
+if shirt_color == "blue":
+    suggest = ["black jeans", "white sneakers"]
+Later (optional):
+Add simple ML model
+🎯 Output:
+“Complete outfit suggestions” visible
+🎬 Phase 6: Demo Polish (Day 14)
+✅ Improve:
+UI responsiveness
+Show loading spinner
+Clean results
+🎯 Final Demo Flow:
+Upload image
+Select shirt
+See try-on result
+
+See:
+
+“Best paired with black jeans & white shoes”
+
+🧪 Dataset for PoC
+
+You need:
+
+Person images
+Clothing images
+Sources:
+DeepFashion dataset
+Zalando datasets (used in VITON)
+⚙️ Minimal Tech Stack
+Backend:
+FastAPI (Python)
+AI:
+PyTorch
+Pretrained VITON
+Frontend:
+React (or simple HTML)
+Hosting:
+Local OR
+Colab (for GPU)
+⚡ Shortcuts (Highly Recommended)
+1. Use Google Colab for AI
+
+👉 Avoid GPU setup pain
+
+2. Preprocess images manually
+
+👉 Don’t automate everything yet
+
+3. Limit to:
+
+👉 ONLY shirts
+
+❌ What NOT to Do (Big Mistakes)
+
+🚫 Don’t build your own model
+🚫 Don’t support all clothing
+🚫 Don’t add login system
+🚫 Don’t optimize performance
+
+🧠 What Investors / Users Will Look For
+
+Even if imperfect, your PoC should show:
+
+1. Visual Conviction
+
+“Yeah, that kinda looks like me wearing it”
+
+2. Personalization
+
+“Those suggestions make sense”
+
+🏁 Final PoC Deliverable
+
+You should be able to demo:
+
+“Upload your photo → try a shirt → get full outfit suggestions”
