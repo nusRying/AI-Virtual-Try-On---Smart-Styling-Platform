@@ -50,8 +50,8 @@
   2. User can view the processed try-on result in the browser once generation is complete (via polling).
   3. User can select from a few sample garments to trigger the try-on.
 **Plans**: 2 plans
-- [ ] 03-01-PLAN.md — Frontend Setup & Upload Component
-- [ ] 03-02-PLAN.md — Garment Selection & API Integration
+- [x] 03-01-PLAN.md — Frontend Setup & Upload Component
+- [x] 03-02-PLAN.md — Garment Selection & API Integration
 **UI hint**: yes
 
 ### Phase 4: Product Catalog & Search
@@ -93,7 +93,7 @@
 |-------|----------------|--------|-----------|
 | 1. Core VTO Engine | 3/3 | Completed | 2026-03-24 |
 | 2. Async Infrastructure | 3/3 | Completed | 2026-03-24 |
-| 3. User Experience | 0/2 | In Progress | - |
+| 3. User Experience | 2/2 | Completed | 2026-03-24 |
 | 4. Product Catalog | 0/1 | Not started | - |
 | 5. Smart Styling | 0/1 | Not started | - |
 | 6. Merchant Dashboard | 0/1 | Not started | - |

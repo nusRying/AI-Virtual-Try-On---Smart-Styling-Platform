@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from celery.result import AsyncResult
 import os
 import uuid
@@ -7,6 +8,15 @@ import shutil
 from backend.tasks import vto_task
 
 app = FastAPI(title="AI Virtual Try-On API (Async)")
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # In production, replace with specific frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Configuration for file storage
 UPLOAD_DIR = "temp/uploads"

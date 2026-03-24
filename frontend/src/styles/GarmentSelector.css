@@ -1,0 +1,51 @@
+.garment-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.garment-hint {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.garment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 600px;
+}
+
+.garment-card {
+  border: 2px solid #eee;
+  border-radius: 12px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.garment-card:hover {
+  transform: translateY(-5px);
+  border-color: #007bff;
+}
+
+.garment-card.selected {
+  border-color: #007bff;
+  background-color: #f0f7ff;
+}
+
+.garment-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.garment-card p {
+  font-size: 0.9rem;
+  margin: 0;
+  font-weight: 500;
+}
