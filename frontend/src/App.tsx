@@ -1,12 +1,59 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import UserPhotoUpload from './components/UserPhotoUpload'
-import ProductCatalog, { Garment } from './components/ProductCatalog'
+import ProductCatalog from './components/ProductCatalog'
+import type { Garment } from './components/ProductCatalog'
 import StylingRecommendations from './components/StylingRecommendations'
+import type { RecommendedItem } from './components/StylingRecommendations'
 import MerchantDashboard from './components/MerchantDashboard'
+import { BACKEND_ORIGIN, API_BASE_URL } from './config'
 import './App.css'
 
-const API_BASE_URL = 'http://localhost:8000/api/v1'
+interface RecommendationsResponse {
+  recommendations: RecommendedItem[]
+  styling_tip: string
+}
+
+interface TryOnSubmissionResponse {
+  task_id: string
+  status?: string
+  result?: TryOnTaskResult
+}
+
+interface TryOnTaskResult {
+  status: 'success' | 'error'
+  output_path?: string
+  result_url?: string
+  message?: string
+}
+
+interface TryOnTaskStatusResponse {
+  status: string
+  result: TryOnTaskResult | null
+  error?: string
+}
+
+interface ApiErrorResponse {
+  detail?: string
+  error?: string
+  message?: string
+}
+
+const getErrorMessage = (error: unknown, fallback: string) => {
+  if (axios.isAxiosError<ApiErrorResponse>(error)) {
+    return error.response?.data?.detail
+      ?? error.response?.data?.error
+      ?? error.response?.data?.message
+      ?? error.message
+      ?? fallback
+  }
+
+  if (error instanceof Error) {
+    return error.message
+  }
+
+  return fallback
+}
 
 function App() {
   const [viewMode, setViewMode] = useState<'user' | 'merchant'>('user')
@@ -18,7 +65,7 @@ function App() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   
   // Recommendations state
-  const [recommendations, setRecommendations] = useState<any[]>([])
+  const [recommendations, setRecommendations] = useState<RecommendedItem[]>([])
   const [stylingTip, setStylingTip] = useState<string>('')
 
   const handlePhotoSelect = (file: File) => {
@@ -39,7 +86,7 @@ function App() {
 
   const fetchRecommendations = async (garmentId: string) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/recommendations/${garmentId}`)
+      const response = await axios.get<RecommendationsResponse>(`${API_BASE_URL}/recommendations/${garmentId}`)
       setRecommendations(response.data.recommendations)
       setStylingTip(response.data.styling_tip)
     } catch (err) {
@@ -57,12 +104,33 @@ function App() {
       formData.append('user_image', photo)
       formData.append('garment_id', garmentId)
 
-      const response = await axios.post(`${API_BASE_URL}/try-on`, formData)
+      const response = await axios.post<TryOnSubmissionResponse>(`${API_BASE_URL}/try-on`, formData)
+      
+      // Check for immediate synchronous result (Mock Mode)
+      if (response.data.status === 'SUCCESS' && response.data.result) {
+        const resultData = response.data.result
+        if (resultData.status === 'success') {
+          if (resultData.result_url) {
+            const finalUrl = resultData.result_url.startsWith('http') 
+              ? resultData.result_url 
+              : `${BACKEND_ORIGIN}${resultData.result_url}`
+            setResultImage(finalUrl)
+          } else if (resultData.output_path) {
+            const filename = resultData.output_path.split(/[\\/]/).pop()
+            setResultImage(`${API_BASE_URL}/results/${filename}`)
+          }
+          setStatus('success')
+          return // Skip polling
+        } else {
+          throw new Error(resultData.message || 'Processing failed')
+        }
+      }
+
       setTaskId(response.data.task_id)
-    } catch (err: any) {
+    } catch (err) {
       console.error('Submission error:', err)
       setStatus('error')
-      setErrorMessage(err.response?.data?.detail || err.message || 'Failed to submit task.')
+      setErrorMessage(getErrorMessage(err, 'Failed to submit task.'))
     }
   }
 
@@ -80,26 +148,36 @@ function App() {
     if (taskId && status === 'processing') {
       interval = window.setInterval(async () => {
         try {
-          const response = await axios.get(`${API_BASE_URL}/tasks/${taskId}`)
+          const response = await axios.get<TryOnTaskStatusResponse>(`${API_BASE_URL}/tasks/${taskId}`)
           const currentStatus = response.data.status
 
           if (currentStatus === 'SUCCESS') {
             const resultData = response.data.result
-            if (resultData.status === 'success') {
-              const filename = resultData.output_path.split(/[\\/]/).pop()
-              setResultImage(`${API_BASE_URL}/results/${filename}`)
+            if (resultData?.status === 'success') {
+              // Prefer result_url if provided by backend
+              if (resultData.result_url) {
+                const finalUrl = resultData.result_url.startsWith('http') 
+                  ? resultData.result_url 
+                  : `${BACKEND_ORIGIN}${resultData.result_url}`
+                setResultImage(finalUrl)
+              } else if (resultData.output_path) {
+                // Fallback for older task formats
+                const filename = resultData.output_path.split(/[\\/]/).pop()
+                setResultImage(`${API_BASE_URL}/results/${filename}`)
+              }
+              
               setStatus('success')
               clearInterval(interval)
             } else {
-              throw new Error(resultData.message || 'Processing failed on server')
+              throw new Error(resultData?.message || 'Processing failed on server')
             }
           } else if (currentStatus === 'FAILURE') {
-            throw new Error(response.data.error || 'Task execution failed')
+            throw new Error(response.data.error || 'Task failed')
           }
-        } catch (err: any) {
+        } catch (err) {
           console.error('Polling error:', err)
           setStatus('error')
-          setErrorMessage(err.message || 'Failed to get task status.')
+          setErrorMessage(getErrorMessage(err, 'Error while processing your request.'))
           clearInterval(interval)
         }
       }, 2000)
@@ -111,24 +189,25 @@ function App() {
   return (
     <div className="app-container">
       <header className="app-header">
-        <div className="header-top">
-          <div className="mode-toggle">
+        <div className="header-content">
+          <div className="logo">
+            <h1>Styling <span>AI</span></h1>
+          </div>
+          <div className="view-toggle">
             <button 
               className={viewMode === 'user' ? 'active' : ''} 
               onClick={() => setViewMode('user')}
             >
-              User View
+              User Studio
             </button>
             <button 
               className={viewMode === 'merchant' ? 'active' : ''} 
               onClick={() => setViewMode('merchant')}
             >
-              Merchant Dashboard
+              Merchant Portal
             </button>
           </div>
         </div>
-        <h1>AI Virtual Try-On</h1>
-        <p>Smart Styling Platform</p>
       </header>
 
       <main className="app-main">
@@ -136,36 +215,31 @@ function App() {
           <MerchantDashboard />
         ) : (
           <div className="workspace">
-            <section className="setup-panel">
+            <aside className="setup-panel">
               <UserPhotoUpload onPhotoSelect={handlePhotoSelect} />
               
-              <ProductCatalog 
-                onGarmentSelect={handleGarmentSelect} 
-                selectedGarmentId={selectedGarment?.id || null} 
-              />
-
-              {status === 'error' && (
-                <div className="error-box">
-                  <p>Error: {errorMessage}</p>
-                  <button onClick={handleTryOnManual} className="retry-btn">Retry Try-On</button>
-                </div>
-              )}
-
               {selectedGarment && (
                 <StylingRecommendations 
                   recommendations={recommendations} 
                   stylingTip={stylingTip} 
                 />
               )}
+            </aside>
+
+            <section className="catalog-panel">
+              <ProductCatalog 
+                onGarmentSelect={handleGarmentSelect} 
+                selectedGarmentId={selectedGarment?.id || null} 
+              />
             </section>
 
             <section className="result-panel">
-              <h3>3. Try-On Result</h3>
+              <h3><span>✨</span> Try-On Studio</h3>
               <div className="result-display">
                 {status === 'processing' && (
                   <div className="loader-container">
-                    <div className="loader"></div>
-                    <p>Our AI is dressing you up...</p>
+                    <span className="loader"></span>
+                    <p>AI is dressing you up...</p>
                   </div>
                 )}
                 
@@ -176,12 +250,21 @@ function App() {
                   </div>
                 )}
 
+                {status === 'error' && (
+                  <div className="error-box">
+                    <p>Something went wrong: {errorMessage}</p>
+                    <button onClick={handleTryOnManual} className="retry-btn">Try Again</button>
+                  </div>
+                )}
+
                 {status === 'idle' && !resultImage && (
                   <div className="result-placeholder">
-                    {selectedPhoto ? (
-                      <p>Select a garment to see the magic!</p>
+                    {!selectedPhoto ? (
+                      <p>Upload a portrait to begin your styling session</p>
+                    ) : !selectedGarment ? (
+                      <p>Choose a garment to see the virtual try-on</p>
                     ) : (
-                      <p>Please upload a portrait photo first.</p>
+                      <p>Ready to try on the {selectedGarment.name}!</p>
                     )}
                   </div>
                 )}
@@ -192,7 +275,7 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>&copy; 2026 AI Virtual Try-On Platform</p>
+        <p>&copy; 2026 AI Virtual Try-On Platform • Built for the Future of Fashion</p>
       </footer>
     </div>
   )

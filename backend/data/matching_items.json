@@ -4,47 +4,47 @@
     "name": "Slim Fit Chinos",
     "category": "Pants",
     "price": 55.00,
-    "thumbnail_url": "https://via.placeholder.com/150x200?text=Chinos",
-    "tags": ["casual", "formal", "cotton", "slim"]
+    "thumbnail_url": "https://images.unsplash.com/photo-1473966968600-fa804b869a1a?auto=format&fit=crop&q=80&w=400",
+    "tags": ["casual", "formal", "khaki", "cotton", "slim", "classic"]
   },
   {
     "id": "pants-2",
     "name": "Relaxed Cargo Pants",
     "category": "Pants",
     "price": 65.00,
-    "thumbnail_url": "https://via.placeholder.com/150x200?text=Cargo",
-    "tags": ["casual", "rugged", "utility", "olive"]
+    "thumbnail_url": "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&q=80&w=400",
+    "tags": ["casual", "rugged", "utility", "olive", "relaxed"]
   },
   {
     "id": "shoes-1",
     "name": "Minimalist White Sneakers",
     "category": "Shoes",
     "price": 85.00,
-    "thumbnail_url": "https://via.placeholder.com/150x150?text=Sneakers",
-    "tags": ["casual", "white", "minimal", "leather"]
+    "thumbnail_url": "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&q=80&w=400",
+    "tags": ["casual", "white", "minimal", "leather", "monochrome"]
   },
   {
     "id": "shoes-2",
     "name": "Classic Brown Loafers",
     "category": "Shoes",
     "price": 120.00,
-    "thumbnail_url": "https://via.placeholder.com/150x150?text=Loafers",
-    "tags": ["formal", "brown", "leather", "classic"]
+    "thumbnail_url": "https://images.unsplash.com/photo-1531310197839-ccf54634509e?auto=format&fit=crop&q=80&w=400",
+    "tags": ["formal", "brown", "leather", "classic", "polished"]
   },
   {
     "id": "pants-3",
     "name": "Dark Wash Jeans",
     "category": "Pants",
     "price": 70.00,
-    "thumbnail_url": "https://via.placeholder.com/150x200?text=Jeans",
-    "tags": ["casual", "denim", "dark", "versatile"]
+    "thumbnail_url": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&q=80&w=400",
+    "tags": ["casual", "denim", "dark", "blue", "versatile", "rugged"]
   },
   {
     "id": "shoes-3",
     "name": "Black Chelsea Boots",
     "category": "Shoes",
     "price": 140.00,
-    "thumbnail_url": "https://via.placeholder.com/150x150?text=Boots",
-    "tags": ["casual", "formal", "black", "leather"]
+    "thumbnail_url": "https://images.unsplash.com/photo-1638247025967-b4e38f787b76?auto=format&fit=crop&q=80&w=400",
+    "tags": ["casual", "formal", "black", "leather", "minimalist", "sleek"]
   }
 ]

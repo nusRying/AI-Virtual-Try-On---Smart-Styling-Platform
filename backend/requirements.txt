@@ -14,3 +14,12 @@ python-dotenv
 numpy
 celery
 redis
+sqlalchemy
+alembic
+xformers
+scipy
+scikit-image
+pyyaml
+weaviate-client
+sentence-transformers
+google-generativeai

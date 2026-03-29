@@ -1,0 +1,43 @@
+# Environments
+venv/
+backend/venv/
+backend/venv_old/
+.venv/
+
+# Logs
+*.log
+*.err
+backend.log
+frontend.log
+
+# Databases
+*.db
+*.sqlite3
+
+# Models & Large Data
+models/cache/
+models/
+temp/
+outputs/
+uploads/
+
+# OS/IDEs
+.vscode/
+.idea/
+DS_Store
+Thumbs.db
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/src/config.ts
+
+# Misc
+.env
+Umair_TryOn_Result.png
+Umair_TryOn_Smart_V2.png
+repos.json
+repos_list.json
+repos_utf8.json
+__pycache__/
+*.pyc

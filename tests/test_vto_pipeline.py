@@ -3,7 +3,7 @@ import argparse
 import os
 import time
 
-def test_vto_async(user_image, garment_image, host="http://localhost:8000"):
+def run_vto_async_test(user_image, garment_image, host="http://localhost:8000"):
     """
     End-to-end test for the asynchronous VTO pipeline.
     1. Submits images to the API.
@@ -96,4 +96,4 @@ if __name__ == "__main__":
     user_img = args.user or "tests/samples/user.jpg"
     garment_img = args.garment or "tests/samples/shirt.jpg"
     
-    test_vto_async(user_img, garment_img, args.host)
+    run_vto_async_test(user_img, garment_img, args.host)

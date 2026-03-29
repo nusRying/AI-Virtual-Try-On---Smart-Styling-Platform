@@ -1,4 +1,5 @@
 import React from 'react';
+import { BACKEND_ORIGIN } from '../config';
 import '../styles/StylingRecommendations.css';
 
 interface RecommendedItem {
@@ -15,7 +16,19 @@ interface StylingRecommendationsProps {
 }
 
 const StylingRecommendations: React.FC<StylingRecommendationsProps> = ({ recommendations, stylingTip }) => {
-  if (recommendations.length === 0) return null;
+  if (recommendations.length === 0) {
+    return (
+      <div className="recommendations-container empty">
+        <h3>Complete the Look</h3>
+        <p className="empty-state-text">Select a garment from the catalog to see matching styling advice.</p>
+      </div>
+    );
+  }
+
+  const getImageUrl = (url: string) => {
+    if (url.startsWith('http')) return url;
+    return `${BACKEND_ORIGIN}${url}`;
+  };
 
   return (
     <div className="recommendations-container">
@@ -29,7 +42,7 @@ const StylingRecommendations: React.FC<StylingRecommendationsProps> = ({ recomme
       <div className="matched-items-grid">
         {recommendations.map((item) => (
           <div key={item.id} className="matched-item-card">
-            <img src={item.thumbnail_url} alt={item.name} />
+            <img src={getImageUrl(item.thumbnail_url)} alt={item.name} />
             <div className="matched-item-info">
               <p className="matched-item-name">{item.name}</p>
               <p className="matched-item-category">{item.category}</p>
@@ -43,3 +56,4 @@ const StylingRecommendations: React.FC<StylingRecommendationsProps> = ({ recomme
 };
 
 export default StylingRecommendations;
+export type { RecommendedItem };

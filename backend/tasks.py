@@ -1,8 +1,6 @@
 import os
-from PIL import Image
 from backend.celery_app import celery_app
-from backend.core.preprocessor import Preprocessor
-from backend.core.vton_engine import VTONEngine
+from backend.core.storage import temp_storage
 
 # Lazy initialization inside the worker process
 _preprocessor = None
@@ -12,6 +10,12 @@ def get_preprocessor():
     global _preprocessor
     if _preprocessor is None:
         print("Initializing Preprocessor for worker...")
+        try:
+            from backend.core.preprocessor import Preprocessor
+        except ImportError as e:
+            raise RuntimeError(
+                "Preprocessor dependencies are missing. Install the backend AI requirements before running the worker."
+            ) from e
         _preprocessor = Preprocessor()
     return _preprocessor
 
@@ -19,6 +23,12 @@ def get_engine():
     global _engine
     if _engine is None:
         print("Initializing VTONEngine for worker...")
+        try:
+            from backend.core.vton_engine import VTONEngine
+        except ImportError as e:
+            raise RuntimeError(
+                "VTON engine dependencies are missing. Install the backend AI requirements before running the worker."
+            ) from e
         _engine = VTONEngine()
     return _engine
 
@@ -28,6 +38,8 @@ def vto_task(user_image_path, garment_image_path, output_path):
     Celery task that performs the virtual try-on pipeline.
     """
     try:
+        from PIL import Image
+
         # Load components
         prep = get_preprocessor()
         engine = get_engine()
@@ -51,12 +63,20 @@ def vto_task(user_image_path, garment_image_path, output_path):
             prep_results["mask"]
         )
         
-        # 3. Save result
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
-        output_pil.save(output_path)
+        # 3. Save result using temp storage
+        filename = os.path.basename(output_path)
+        key = temp_storage.save_pil_image(output_pil, filename, prefix="outputs")
         
-        print(f"Task completed! Output saved to {output_path}")
-        return {"status": "success", "output_path": output_path}
+        # Return the public URL or relative path for the client
+        result_url = temp_storage.get_url(key)
+        
+        print(f"Task completed! Output saved as {key}")
+        return {
+            "status": "success", 
+            "result_url": result_url, 
+            "filename": filename,
+            "output_path": key # Backwards compatibility
+        }
         
     except Exception as e:
         print(f"Task error: {str(e)}")

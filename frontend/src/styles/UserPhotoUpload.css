@@ -1,57 +1,45 @@
 .upload-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 2rem 0;
-  width: 100%;
+  gap: 1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
 }
 
-.upload-hint {
-  color: #666;
-  font-size: 0.9rem;
-  margin-bottom: 1.5rem;
+.upload-container h3 {
+  font-size: 1rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .upload-box {
-  width: 300px;
-  height: 400px;
-  border: 2px dashed #ccc;
-  border-radius: 12px;
+  width: 100%;
+  aspect-ratio: 4/5;
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-md);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  background: var(--bg-card);
+  transition: all 0.2s ease;
   overflow: hidden;
-  transition: border-color 0.3s;
+  position: relative;
 }
 
 .upload-box:hover {
-  border-color: #007bff;
+  border-color: var(--accent-primary);
+  background: var(--accent-soft);
 }
 
-.file-input {
-  display: none;
-}
-
-.file-label {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.upload-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #999;
-}
-
-.upload-placeholder span {
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
+.upload-box.has-image {
+  border-style: solid;
+  border-color: var(--border-subtle);
 }
 
 .preview-image {
@@ -60,8 +48,40 @@
   object-fit: cover;
 }
 
-.error-message {
-  color: #dc3545;
-  font-size: 0.85rem;
-  margin-top: 1rem;
+.upload-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--accent-primary);
+}
+
+.upload-box p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+.upload-box span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+.change-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-overlay);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  color: white;
+  font-weight: 500;
+  font-size: 0.875rem;
+  backdrop-filter: blur(4px);
+}
+
+.upload-box:hover .change-photo-overlay {
+  opacity: 1;
 }

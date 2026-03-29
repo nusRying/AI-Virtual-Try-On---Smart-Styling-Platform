@@ -9,9 +9,10 @@
 - [x] **Phase 1: Core VTO Engine** - Implement the diffusion-based inference pipeline for realistic garment overlay.
 - [x] **Phase 2: Async Infrastructure & API Gateway** - Build the scalable backend to handle long-running AI tasks.
 - [x] **Phase 3: User Experience & Photo Management** - Create the frontend for users to upload photos and view try-on results.
-- [ ] **Phase 4: Product Catalog & Search** - Implement the searchable selection of garments for try-on.
-- [ ] **Phase 5: Smart Styling Recommendations** - Integrate the RAG-based engine for "Complete the Look" advice.
-- [ ] **Phase 6: Merchant Dashboard** - Deliver the interface for merchants to manage inventory and view analytics.
+- [x] **Phase 4: Product Catalog & Search** - Implement the searchable selection of garments for try-on.
+- [x] **Phase 5: Smart Styling Recommendations** - Integrate the RAG-based engine for "Complete the Look" advice.
+- [x] **Phase 6: Merchant Dashboard** - Deliver the interface for merchants to manage inventory and view analytics.
+- [ ] **Phase 8: Advanced Search & Vector Discovery** - Implement semantic retrieval for better "Complete the Look" results.
 
 ## Phase Details
 
@@ -103,3 +104,32 @@
 | 4. Product Catalog | 2/2 | Completed | 2026-03-25 |
 | 5. Smart Styling | 2/2 | Completed | 2026-03-25 |
 | 6. Merchant Dashboard | 2/2 | Completed | 2026-03-25 |
+| 7. Production Infrastructure | 3/3 | Completed | 2026-03-29 |
+| 8. Advanced Search | 0/2 | In Progress | - |
+
+## Phase Details
+
+### Phase 7: Production Infrastructure & Scaling
+**Goal**: Transition from prototype storage and mock logic to a scalable production-ready foundation.
+**Depends on**: Phase 6
+**Requirements**: PLAT-04 (New)
+**Success Criteria** (what must be TRUE):
+  1. All garment and merchant data is stored in a relational database (SQLite/Postgres) instead of JSON.
+  2. The `torch` environment is repaired, enabling "Real Diffusion" inference on the RTX 3050.
+  3. Image storage is abstracted through a storage service (Local/S3 compatible).
+**Plans**: 3 plans
+- [x] 07-01-PLAN.md — Database Migration (SQLAlchemy + SQLite/Postgres)
+- [x] 07-02-PLAN.md — GPU Environment Repair & Real Inference Toggle
+- [x] 07-03-PLAN.md — Storage Layer Abstraction & Cleanup Logic
+
+### Phase 8: Advanced Search & Vector Discovery
+**Goal**: Implement semantic retrieval for more natural and relevant item discovery.
+**Depends on**: Phase 7
+**Requirements**: STYL-02 (Actual)
+**Success Criteria** (what must be TRUE):
+  1. All catalog items are indexed in Weaviate with CLIP-based image embeddings.
+  2. Users can search the catalog using natural language (e.g., "formal blue shirt for summer").
+  3. "Complete the Look" recommendations are based on vector similarity rather than just tags.
+**Plans**: 2 plans
+- [ ] 08-01-PLAN.md — Vector DB Integration (Weaviate + CLIP)
+- [ ] 08-02-PLAN.md — Semantic Recommendation Refactor

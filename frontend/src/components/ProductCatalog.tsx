@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BACKEND_ORIGIN, API_BASE_URL } from '../config';
 import '../styles/ProductCatalog.css';
 
 interface Garment {
@@ -18,42 +19,42 @@ interface ProductCatalogProps {
   selectedGarmentId: string | null;
 }
 
-const API_BASE_URL = 'http://localhost:8000/api/v1';
-
 const ProductCatalog: React.FC<ProductCatalogProps> = ({ onGarmentSelect, selectedGarmentId }) => {
   const [garments, setGarments] = useState<Garment[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSemantic, setIsSemantic] = useState(false);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const limit = 6;
 
-  const fetchCatalog = async () => {
-    setIsLoading(true);
-    try {
-      const response = await axios.get(`${API_BASE_URL}/catalog`, {
-        params: {
-          q: searchQuery || undefined,
-          page: page,
-          limit: limit
-        }
-      });
-      setGarments(response.data.garments);
-      setTotalCount(response.data.total_count);
-    } catch (error) {
-      console.error('Error fetching catalog:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      fetchCatalog();
+    const delayDebounceFn = window.setTimeout(() => {
+      const fetchCatalog = async () => {
+        setIsLoading(true);
+        try {
+          const response = await axios.get(`${API_BASE_URL}/catalog`, {
+            params: {
+              q: searchQuery || undefined,
+              page: page,
+              limit: limit,
+              semantic: isSemantic
+            }
+          });
+          setGarments(response.data.garments);
+          setTotalCount(response.data.total_count);
+        } catch (error) {
+          console.error('Error fetching catalog:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      void fetchCatalog();
     }, 300);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [searchQuery, page]);
+  }, [searchQuery, page, isSemantic]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -72,13 +73,34 @@ const ProductCatalog: React.FC<ProductCatalogProps> = ({ onGarmentSelect, select
 
   const totalPages = Math.ceil(totalCount / limit);
 
+  const getImageUrl = (url: string) => {
+    if (!url) return '';
+    if (url.startsWith('http')) return url;
+    // Ensure leading slash for relative paths
+    const normalizedUrl = url.startsWith('/') ? url : `/${url}`;
+    return `${BACKEND_ORIGIN}${normalizedUrl}`;
+  };
+
   return (
     <div className="catalog-container">
       <div className="catalog-header">
-        <h3>2. Select a Garment</h3>
+        <div className="catalog-title-row">
+          <h3>2. Select a Garment</h3>
+          <div className="semantic-toggle-container">
+            <span className="toggle-label">AI Discovery</span>
+            <label className="switch">
+              <input 
+                type="checkbox" 
+                checked={isSemantic} 
+                onChange={(e) => setIsSemantic(e.target.checked)} 
+              />
+              <span className="slider round"></span>
+            </label>
+          </div>
+        </div>
         <input
           type="text"
-          placeholder="Search garments (e.g. white, denim)..."
+          placeholder={isSemantic ? "Search with AI (e.g. stylish office wear)..." : "Search by tags (e.g. white, denim)..."}
           value={searchQuery}
           onChange={handleSearchChange}
           className="search-input"
@@ -97,7 +119,7 @@ const ProductCatalog: React.FC<ProductCatalogProps> = ({ onGarmentSelect, select
                 onClick={() => onGarmentSelect(garment)}
               >
                 <div className="image-wrapper">
-                  <img src={`http://localhost:8000${garment.thumbnail_url}`} alt={garment.name} />
+                  <img src={getImageUrl(garment.thumbnail_url)} alt={garment.name} />
                 </div>
                 <div className="garment-info">
                   <p className="garment-name">{garment.name}</p>

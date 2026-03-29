@@ -1,144 +1,237 @@
 .catalog-container {
-  width: 100%;
-  max-width: 800px;
-  margin: 2rem 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
 }
 
 .catalog-header {
-  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-bottom: 2rem;
   gap: 1rem;
+}
+
+.catalog-header h3 {
+  font-size: 1rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.catalog-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.semantic-toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.toggle-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Switch styling */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--border-strong);
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--accent-primary);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--accent-primary);
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+.slider.round {
+  border-radius: 20px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 
 .search-input {
   width: 100%;
-  max-width: 400px;
-  padding: 0.8rem 1.2rem;
-  border: 2px solid #eee;
-  border-radius: 25px;
-  font-size: 1rem;
-  outline: none;
-  transition: border-color 0.2s;
+  padding: 0.75rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  transition: all 0.2s;
 }
 
 .search-input:focus {
-  border-color: #007bff;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+  outline: none;
 }
 
 .garment-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.25rem;
 }
 
 .garment-card {
-  border: 2px solid #eee;
-  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.2s ease;
-  background-color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
 }
 
 .garment-card:hover {
-  transform: translateY(-5px);
-  border-color: #007bff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transform: translateY(-4px);
+  border-color: var(--accent-border);
+  box-shadow: var(--shadow-lg);
 }
 
 .garment-card.selected {
-  border-color: #007bff;
-  background-color: #f0f7ff;
+  border-color: var(--accent-primary);
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 2px var(--accent-primary);
 }
 
 .image-wrapper {
   aspect-ratio: 3/4;
   width: 100%;
-  background-color: #f8f9fa;
   overflow: hidden;
+  background: var(--bg-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .image-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.garment-card:hover .image-wrapper img {
+  transform: scale(1.05);
 }
 
 .garment-info {
-  padding: 1rem;
-  text-align: left;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .garment-name {
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin: 0 0 0.3rem 0;
-  color: #213547;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .garment-price {
-  font-size: 0.9rem;
-  color: #007bff;
-  font-weight: 700;
-  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--accent-primary);
 }
 
 .catalog-loader {
   padding: 3rem;
-  color: #666;
-  font-style: italic;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.875rem;
 }
 
 .no-results {
   padding: 2rem;
-  color: #999;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.875rem;
 }
 
 .pagination {
-  margin-top: 2.5rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .pagination button {
-  padding: 0.5rem 1.2rem;
-  border: 1px solid #007bff;
-  background-color: transparent;
-  color: #007bff;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s;
+  padding: 0.5rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
-.pagination button:hover:not(:disabled) {
-  background-color: #007bff;
-  color: white;
+.pagination button:not(:disabled):hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
 }
 
 .pagination button:disabled {
-  border-color: #ccc;
-  color: #ccc;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
 .pagination span {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-@media (max-width: 600px) {
-  .garment-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
 }

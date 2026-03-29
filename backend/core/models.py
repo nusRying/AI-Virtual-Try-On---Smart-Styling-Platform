@@ -1,5 +1,12 @@
 import os
-import torch
+try:
+    import torch
+    TORCH_AVAILABLE = True
+except ImportError:
+    TORCH_AVAILABLE = False
+except Exception:
+    TORCH_AVAILABLE = False
+
 from huggingface_hub import hf_hub_download, snapshot_download
 
 class ModelManager:
@@ -36,16 +43,44 @@ class ModelManager:
 
     def verify_weights(self):
         """
-        Check if the necessary weights are present.
+        Check if the necessary weights are present by looking for key config files.
         """
-        # This is a simplified check
-        sam2_exists = any("sam2_hiera_large.pt" in f for root, dirs, files in os.walk(self.cache_dir) for f in files)
-        vton_exists = os.path.exists(os.path.join(self.cache_dir, "models--yisol--IDM-VTON")) or \
-                      any("IDM-VTON" in d for root, d, files in os.walk(self.cache_dir) for d in d)
-                      
+        sam2_exists = False
+        vton_exists = False
+        
+        # 1. Check SAM 2
+        for root, dirs, files in os.walk(self.cache_dir):
+            if "sam2_hiera_large.pt" in files:
+                sam2_exists = True
+                break
+        
+        # 2. Check for SDXL Inpaint Fallback
+        sdxl_fallback_exists = False
+        for root, dirs, files in os.walk(self.cache_dir):
+            if "models--diffusers--stable-diffusion-xl-1.0-inpainting-0.1" in root and "snapshots" in root:
+                # We found a snapshot folder, check if it has unet and vae
+                snapshot_root = root
+                if "unet" in dirs and "vae" in dirs:
+                    # Check for actual weights
+                    unet_weight = os.path.join(snapshot_root, "unet", "diffusion_pytorch_model.safetensors")
+                    vae_weight = os.path.join(snapshot_root, "vae", "diffusion_pytorch_model.safetensors")
+                    if os.path.exists(unet_weight) and os.path.exists(vae_weight):
+                        sdxl_fallback_exists = True
+                        break
+
+        # 3. Check for SD 1.5 Inpaint (Efficiency Model)
+        sd15_exists = False
+        for root, dirs, files in os.walk(self.cache_dir):
+            if "models--runwayml--stable-diffusion-inpainting" in root and "snapshots" in root:
+                if "unet" in dirs and "vae" in dirs:
+                    sd15_exists = True
+                    break
+
         return {
             "sam2": sam2_exists,
-            "idm_vton": vton_exists
+            "idm_vton": vton_exists,
+            "sdxl_fallback": sdxl_fallback_exists,
+            "sd15_inpaint": sd15_exists
         }
 
 def verify_models():
@@ -53,11 +88,13 @@ def verify_models():
     status = manager.verify_weights()
     print(f"SAM 2 Weights: {'FOUND' if status['sam2'] else 'MISSING'}")
     print(f"IDM-VTON Weights: {'FOUND' if status['idm_vton'] else 'MISSING'}")
+    print(f"SDXL Fallback Weights: {'FOUND' if status['sdxl_fallback'] else 'MISSING'}")
+    print(f"SD 1.5 Efficiency Weights: {'FOUND' if status['sd15_inpaint'] else 'MISSING'}")
     
-    if not all(status.values()):
-        print("\nUse ModelManager.download_sam2() or download_idm_vton() to fetch missing weights.")
+    if status['idm_vton'] or status['sdxl_fallback'] or status['sd15_inpaint']:
+        print("\nReady for Real Diffusion Inference.")
     else:
-        print("\nAll required model weights are present.")
+        print("\nReal Diffusion models are missing. Using Mock Mode.")
 
 if __name__ == "__main__":
     verify_models()
